@@ -1,0 +1,23 @@
+.arrow {
+    width: 15px;
+    height: 2px;
+    background-color: $gray;
+    position: relative;
+
+    &::before {
+        @include element(6px, 6px, transparent);
+        border: 4px solid transparent;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    &--sidebar::before {
+        border-bottom: 4px solid $gray;
+        bottom: 5px;
+    }
+
+    &--catalog::before {
+        border-top: 4px solid $gray;
+        top: 5px;
+    }
+}
