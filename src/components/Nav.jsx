@@ -1,8 +1,9 @@
 import ListLink from "./ListLink";
+
 import {listLinksTitlePages} from "../data";
 import {listLinksTitleShop} from "../data";
 
-export default function Nav() {
+export default function Nav({onChange}) {
     return (
         <nav className="nav">
             <a className="nav__link" href="#">
@@ -13,22 +14,34 @@ export default function Nav() {
                     Pages
                 </a>
                 <ul className="list">
-                    <ListLink title={listLinksTitlePages[0].title} />
-                    <ListLink title={listLinksTitlePages[1].title} />
-                    <ListLink title={listLinksTitlePages[2].title} />
-                    <ListLink title={listLinksTitlePages[3].title} />
-                    <ListLink title={listLinksTitlePages[4].title} />
-                    <ListLink title={listLinksTitlePages[5].title} />
+                    {listLinksTitlePages.map((link) => {
+                        return (
+                            <ListLink
+                                title={link.title}
+                                key={link.title}
+                                onChange={onChange}
+                            />
+                        );
+                    })}
                 </ul>
             </div>
             <div className="nav__down">
-                <a className="nav__link nav__link--list active" href="#">
+                <a
+                    className="nav__link nav__link--list active"
+                    href="#"
+                    onClick={() => onChange("Shop")}>
                     Shop
                 </a>
                 <ul className="list">
-                    <ListLink title={listLinksTitleShop[0].title} />
-                    <ListLink title={listLinksTitleShop[1].title} />
-                    <ListLink title={listLinksTitleShop[2].title} />
+                    {listLinksTitleShop.map((link) => {
+                        return (
+                            <ListLink
+                                title={link.title}
+                                key={link.title}
+                                onChange={onChange}
+                            />
+                        );
+                    })}
                 </ul>
             </div>
             <a className="nav__link" href="#">

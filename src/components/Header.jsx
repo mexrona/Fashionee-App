@@ -3,9 +3,18 @@ import Logo from "./Logo";
 import Menu from "./Menu";
 import Nav from "./Nav";
 
-export default function Header() {
+import {useState} from "react";
+import {headerItems} from "../data";
+
+export default function Header({onChange}) {
+    const [scrollPos, setScrollPos] = useState(0);
+
+    window.addEventListener("scroll", () => setScrollPos(window.scrollY));
+
     return (
-        <header className="header" id="header">
+        <header
+            className={scrollPos === 0 ? "header" : "header fixed"}
+            id="header">
             <div className="container container--header">
                 <div className="header__inner">
                     <div className="header__left">
@@ -14,43 +23,28 @@ export default function Header() {
                             <Logo />
                             <Menu />
                         </div>
-                        <Nav />
+                        <Nav onChange={onChange} />
                     </div>
                     <div className="header__right">
-                        <div className="header__item">
-                            <img
-                                src="../public/images/icons/search.png"
-                                alt="Search"
-                                className="header__icon"
-                            />
-                        </div>
-                        <div className="header__item">
-                            <img
-                                src="../public/images/icons/user.png"
-                                alt="My profile"
-                                className="header__icon"
-                            />
-                        </div>
-                        <div className="header__item">
-                            <img
-                                src="../public/images/icons/heart.png"
-                                alt="Wishlist"
-                                className="header__icon"
-                            />
-                            <div className="header__count" id="heart">
-                                0
-                            </div>
-                        </div>
-                        <div className="header__item">
-                            <img
-                                src="../public/images/icons/shopping-bag.png"
-                                alt="Cart"
-                                className="header__icon"
-                            />
-                            <div className="header__count" id="cart">
-                                0
-                            </div>
-                        </div>
+                        {headerItems.map((item) => {
+                            return (
+                                <div className="header__item" key={item.alt}>
+                                    <img
+                                        src={item.src}
+                                        alt={item.alt}
+                                        className="header__icon"
+                                        onClick={() => onChange(item.alt)}
+                                    />
+                                    {item.id ? (
+                                        <div
+                                            className="header__count"
+                                            id={item.id}>
+                                            0
+                                        </div>
+                                    ) : null}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

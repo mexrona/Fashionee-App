@@ -1,23 +1,32 @@
+import {useState} from "react";
+import {categories} from "../data";
+
 export default function Categories() {
+    const [activeCategory, setActiveCategory] = useState("Men");
+
+    const handleClick = (type) => {
+        setActiveCategory(type);
+    };
+
     return (
         <div className="categories">
             <h2 className="sidebar__title">Categories</h2>
             <div className="categories__inner">
-                <div className="categories__item" data-category="All">
-                    All
-                </div>
-                <div className="categories__item active" data-category="Men">
-                    Men
-                </div>
-                <div className="categories__item" data-category="Women">
-                    Women
-                </div>
-                <div className="categories__item" data-category="Accessories">
-                    Accessories
-                </div>
-                <div className="categories__item" data-category="New Arrivals">
-                    New Arrivals
-                </div>
+                {categories.map((category) => {
+                    return (
+                        <div
+                            className={
+                                activeCategory === category.title
+                                    ? "categories__item active"
+                                    : "categories__item"
+                            }
+                            data-category={category.title}
+                            onClick={() => handleClick(category.title)}
+                            key={category.title}>
+                            {category.title}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

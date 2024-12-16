@@ -1,12 +1,13 @@
 import Pager from "./Pager";
-import {products} from "../data";
+import {products} from "../products.json";
 
 export default function Catalog() {
     return (
         <div className="catalog">
             <div className="catalog__header">
                 <div className="catalog__text">
-                    There are <span>67</span> products in this category
+                    There are <span>{products.length}</span> products in this
+                    category
                 </div>
                 <div className="catalog__filter">
                     <div className="arrow arrow--catalog"></div>
