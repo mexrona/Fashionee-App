@@ -1,7 +1,6 @@
-import ListLink from "./ListLink";
+import Navdown from "./Navdown";
 
-import {listLinksTitlePages} from "../data";
-import {listLinksTitleShop} from "../data";
+import {listLinksTitlePages, listLinksTitleShop} from "../data";
 
 export default function Nav({onChange}) {
     return (
@@ -9,41 +8,16 @@ export default function Nav({onChange}) {
             <a className="nav__link" href="#">
                 Home
             </a>
-            <div className="nav__down">
-                <a className="nav__link nav__link--list" href="#">
-                    Pages
-                </a>
-                <ul className="list">
-                    {listLinksTitlePages.map((link) => {
-                        return (
-                            <ListLink
-                                title={link.title}
-                                key={link.title}
-                                onChange={onChange}
-                            />
-                        );
-                    })}
-                </ul>
-            </div>
-            <div className="nav__down">
-                <a
-                    className="nav__link nav__link--list active"
-                    href="#"
-                    onClick={() => onChange("Shop")}>
-                    Shop
-                </a>
-                <ul className="list">
-                    {listLinksTitleShop.map((link) => {
-                        return (
-                            <ListLink
-                                title={link.title}
-                                key={link.title}
-                                onChange={onChange}
-                            />
-                        );
-                    })}
-                </ul>
-            </div>
+            <Navdown
+                onChange={onChange}
+                info={listLinksTitlePages}
+                title="Pages"
+            />
+            <Navdown
+                onChange={onChange}
+                info={listLinksTitleShop}
+                title="Shop"
+            />
             <a className="nav__link" href="#">
                 Blog
             </a>

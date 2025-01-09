@@ -1,5 +1,5 @@
 import Categories from "./Categories";
-import Input from "./Input";
+import Search from "./Search";
 import Price from "./Price";
 import Colors from "./Colors";
 import Reviewed from "./Reviewed";
@@ -11,7 +11,7 @@ export default function Products() {
         <section className="container container--products">
             <div className="products">
                 <aside className="sidebar">
-                    <Input />
+                    <Search />
                     <Categories />
                     <Price />
                     <Colors />

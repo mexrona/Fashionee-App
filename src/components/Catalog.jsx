@@ -1,4 +1,4 @@
-import Pager from "./Pager";
+import Pagination from "./Pagination";
 import {products} from "../products.json";
 
 export default function Catalog() {
@@ -19,53 +19,49 @@ export default function Catalog() {
                 </div>
             </div>
             <div className="catalog__inner" id="products">
-                {products.map((product) => {
-                    return (
-                        <div className="catalog__item" key={product.id}>
-                            <a href="#" className="catalog__preview">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="catalog__img"
-                                />
-                            </a>
-                            {product.isSale && (
-                                <div className="catalog__status catalog__status--sale">
-                                    Sale
-                                </div>
-                            )}
-                            {product.isNew && (
-                                <div className="catalog__status catalog__status--new">
-                                    New
-                                </div>
-                            )}
-                            <div className="catalog__heart" id={product.id}>
-                                <img
-                                    src="../public/images/icons/heart.png"
-                                    alt="Wishlist"
-                                />
+                {products.map((product) => (
+                    <div className="catalog__item" key={product.id}>
+                        <a href="#" className="catalog__preview">
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className="catalog__img"
+                            />
+                        </a>
+                        {product.isSale && (
+                            <div className="catalog__status catalog__status--sale">
+                                Sale
                             </div>
-                            <a href="#" className="catalog__name">
-                                {product.name}
-                            </a>
-                            <div className="catalog__price">
-                                {product.oldPrice && (
-                                    <div className="catalog__old">
-                                        ${product.oldPrice}
-                                    </div>
-                                )}
-                                <div className="catalog__new">
-                                    ${product.price}
-                                </div>
+                        )}
+                        {product.isNew && (
+                            <div className="catalog__status catalog__status--new">
+                                New
                             </div>
-                            <button className="catalog__buy" id={product.id}>
-                                Купить
-                            </button>
+                        )}
+                        <div className="catalog__heart" id={product.id}>
+                            <img
+                                src="../public/images/icons/heart.png"
+                                alt="Wishlist"
+                            />
                         </div>
-                    );
-                })}
+                        <a href="#" className="catalog__name">
+                            {product.name}
+                        </a>
+                        <div className="catalog__price">
+                            {product.oldPrice && (
+                                <div className="catalog__old">
+                                    ${product.oldPrice}
+                                </div>
+                            )}
+                            <div className="catalog__new">${product.price}</div>
+                        </div>
+                        <button className="catalog__buy" id={product.id}>
+                            Купить
+                        </button>
+                    </div>
+                ))}
             </div>
-            <Pager />
+            <Pagination />
         </div>
     );
 }

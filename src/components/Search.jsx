@@ -1,4 +1,10 @@
-export default function Input() {
+import {useState} from "react";
+
+export default function Search() {
+    const [value, setValue] = useState("");
+
+    const onChange = (value) => setValue(value);
+
     return (
         <div className="input">
             <label>
@@ -8,6 +14,8 @@ export default function Input() {
                     name="search"
                     type="text"
                     placeholder="Search"
+                    value={value}
+                    onChange={() => onChange()}
                 />
                 <img
                     className="input__icon input__icon--search"

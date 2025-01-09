@@ -23,16 +23,14 @@ export default function Footer() {
                             <div className="footer__item">
                                 <h5 className="footer__title">About</h5>
                                 <div className="footer__list">
-                                    {footerListAbout.map((link) => {
-                                        return (
-                                            <a
-                                                className="footer__text footer__text--link"
-                                                href="#"
-                                                key={link.title}>
-                                                {link.title}
-                                            </a>
-                                        );
-                                    })}
+                                    {footerListAbout.map((link) => (
+                                        <a
+                                            className="footer__text footer__text--link"
+                                            href="#"
+                                            key={link.id}>
+                                            {link.title}
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -40,16 +38,14 @@ export default function Footer() {
                             <div className="footer__item">
                                 <h5 className="footer__title">Useful Links</h5>
                                 <div className="footer__list">
-                                    {footerListUseful.map((link) => {
-                                        return (
-                                            <a
-                                                className="footer__text footer__text--link"
-                                                href="#"
-                                                key={link.title}>
-                                                {link.title}
-                                            </a>
-                                        );
-                                    })}
+                                    {footerListUseful.map((link) => (
+                                        <a
+                                            className="footer__text footer__text--link"
+                                            href="#"
+                                            key={link.id}>
+                                            {link.title}
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
                         </div>

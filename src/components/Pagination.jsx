@@ -1,4 +1,4 @@
-export default function Pager() {
+export default function Pagination() {
     return (
         <div className="pager" id="pager">
             <div

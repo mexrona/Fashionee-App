@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import Header from "./components/Header";
 import Intro from "./components/Intro";
@@ -8,22 +8,26 @@ import Footer from "./components/Footer";
 import Cart from "./components/Cart";
 
 export default function App() {
-    const [nav, setNav] = useState("Shop");
+    const [currentPage, setCurrentPage] = useState("Shop");
 
-    document.getElementsByTagName("title")[0].innerHTML = nav;
+    useEffect(() => {
+        document.title = currentPage;
+    }, [currentPage]);
+
+    const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
 
     return (
         <>
-            <Header onChange={(current) => setNav(current)} />
+            <Header onChange={changeCurrentPage} />
             <main>
-                <Intro nav={nav} />
-                {nav === "Shop" && (
+                <Intro currentPage={currentPage} />
+                {currentPage === "Shop" && (
                     <>
                         <Products />
                         <Newsletter />
                     </>
                 )}
-                {nav === "Cart" && <Cart />}
+                {currentPage === "Cart" && <Cart />}
             </main>
             <Footer />
         </>

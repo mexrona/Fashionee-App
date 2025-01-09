@@ -3,13 +3,19 @@ import Logo from "./Logo";
 import Menu from "./Menu";
 import Nav from "./Nav";
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {headerItems} from "../data";
 
 export default function Header({onChange}) {
     const [scrollPos, setScrollPos] = useState(0);
 
-    window.addEventListener("scroll", () => setScrollPos(window.scrollY));
+    const changeScrollPos = () => setScrollPos(window.scrollY);
+
+    useEffect(() => {
+        window.addEventListener("scroll", changeScrollPos);
+
+        return () => window.removeEventListener("scroll", changeScrollPos);
+    }, []);
 
     return (
         <header
@@ -26,25 +32,21 @@ export default function Header({onChange}) {
                         <Nav onChange={onChange} />
                     </div>
                     <div className="header__right">
-                        {headerItems.map((item) => {
-                            return (
-                                <div className="header__item" key={item.alt}>
-                                    <img
-                                        src={item.src}
-                                        alt={item.alt}
-                                        className="header__icon"
-                                        onClick={() => onChange(item.alt)}
-                                    />
-                                    {item.id ? (
-                                        <div
-                                            className="header__count"
-                                            id={item.id}>
-                                            0
-                                        </div>
-                                    ) : null}
-                                </div>
-                            );
-                        })}
+                        {headerItems.map((item) => (
+                            <div className="header__item" key={item.id}>
+                                <img
+                                    src={item.src}
+                                    alt={item.alt}
+                                    className="header__icon"
+                                    onClick={() => onChange(item.alt)}
+                                />
+                                {item.hasCounter ? (
+                                    <div className="header__count" id={item.id}>
+                                        0
+                                    </div>
+                                ) : null}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

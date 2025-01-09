@@ -20,6 +20,10 @@
     text-align: center;
     transition: color 0.1s linear;
 
+    &.hidden {
+        display: none;
+    }
+
     &:hover {
         color: $red;
     }

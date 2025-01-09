@@ -55,6 +55,11 @@ input[type="checkbox"] {
     display: none;
 }
 
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 button {
     cursor: pointer;
 }
