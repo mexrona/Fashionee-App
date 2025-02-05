@@ -77,11 +77,3 @@ export const categories = [
     {title: "Accessories", id: 3},
     {title: "New Arrivals", id: 4},
 ];
-
-export const colors = [
-    {data: "Black", value: "black", id: 0, isActive: false},
-    {data: "Blue", value: "blue", id: 1, isActive: false},
-    {data: "Red", value: "red", id: 2, isActive: false},
-    {data: "Yellow", value: "yellow", id: 3, isActive: false},
-    {data: "Green", value: "green", id: 4, isActive: false},
-];

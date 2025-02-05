@@ -1,0 +1,17 @@
+@import "../../assets/scss/other/vars";
+@import "../../assets/scss/other/mixins";
+
+.payment,
+.payment__inner {
+    display: flex;
+    align-items: center;
+}
+
+.payment {
+    column-gap: 13px;
+    @include font("Raleway", 400, 14px, 1.7, $gray);
+}
+
+.payment__inner {
+    column-gap: 8px;
+}

@@ -1,0 +1,16 @@
+@import "../../assets/scss/other/vars";
+@import "../../assets/scss/other/mixins";
+
+.products {
+    display: flex;
+    column-gap: 50px;
+    padding-top: 200px;
+}
+
+@media screen and (max-width: $tablet) {
+    .products {
+        flex-direction: column;
+        justify-content: center;
+        gap: 50px;
+    }
+}

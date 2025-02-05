@@ -1,0 +1,6 @@
+@import "../../assets/scss/other/vars";
+@import "../../assets/scss/other/mixins";
+
+.copyright {
+    @include font("Raleway", 400, 14px, 1.7, $gray);
+}
