@@ -1,6 +1,16 @@
-export default function CatalogHeart({id, addFavorites}) {
+import {useState} from "react";
+
+export default function CatalogHeart({addFavorite, product}) {
+    const [isActive, setIsActive] = useState(false);
+
+    const handleClick = () => {
+        setIsActive(!isActive);
+    };
+
     return (
-        <div className="catalog__heart" onClick={() => addFavorites(id)}>
+        <div
+            className={isActive ? "catalog__heart favorite" : "catalog__heart"}
+            onClick={() => addFavorite(handleClick, product)}>
             <img src="../public/images/icons/heart.png" alt="Wishlist" />
         </div>
     );

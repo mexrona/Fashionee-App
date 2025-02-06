@@ -1,10 +1,10 @@
 import Products from "../Products/Products";
 import Newsletter from "../Newsletter/Newsletter";
 
-export default function Shop({addFavorites}) {
+export default function Shop({addFavorite}) {
     return (
         <>
-            <Products addFavorites={addFavorites} />
+            <Products addFavorite={addFavorite} />
             <Newsletter />
         </>
     );

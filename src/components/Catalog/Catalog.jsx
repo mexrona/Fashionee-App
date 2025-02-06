@@ -4,7 +4,7 @@ import CatalogHeart from "./CatalogHeart";
 
 import {products} from "../../products.json";
 
-export default function Catalog({addFavorites}) {
+export default function Catalog({addFavorite}) {
     return (
         <div className="catalog">
             <div className="catalog__header">
@@ -45,8 +45,8 @@ export default function Catalog({addFavorites}) {
                             </div>
                         )}
                         <CatalogHeart
-                            id={product.id}
-                            addFavorites={addFavorites}
+                            product={product}
+                            addFavorite={addFavorite}
                         />
                         <a href="#" className="catalog__name">
                             {product.name}

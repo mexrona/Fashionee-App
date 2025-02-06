@@ -6,7 +6,7 @@ import Reviewed from "../Reviewed/Reviewed";
 import Banner from "../Banner/Banner";
 import Catalog from "../Catalog/Catalog";
 
-export default function Products({addFavorites}) {
+export default function Products({addFavorite}) {
     return (
         <section className="container container--products">
             <div className="products">
@@ -25,7 +25,7 @@ export default function Products({addFavorites}) {
                     <Reviewed />
                     <Banner />
                 </aside>
-                <Catalog addFavorites={addFavorites} />
+                <Catalog addFavorite={addFavorite} />
             </div>
         </section>
     );

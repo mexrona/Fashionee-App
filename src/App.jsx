@@ -6,13 +6,10 @@ import Footer from "./components/Footer/Footer";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
 
-import {products} from "./products.json";
 import {useLocalStorage} from "./hooks/useLocalStorage";
 
 export default function App() {
     const [currentPage, setCurrentPage] = useState("Shop");
-
-    const [heartsCount, setHeartsCount] = useState(0);
 
     const {setLocalStorage, getLocalStorage} = useLocalStorage();
 
@@ -22,43 +19,92 @@ export default function App() {
 
     const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
 
-    useEffect(() => {
-        const copyOfProducts = JSON.parse(JSON.stringify(products));
+    const FAVORITE_PRODUCT_KEY = "favorite-product";
 
-        copyOfProducts.forEach((product) => {
-            product.isFavorite = 0;
+    const [favorites, setFavorites] = useState(0);
+
+    const updateFavoriteInfo = () => {
+        const favoriteProducts = getLocalStorage(FAVORITE_PRODUCT_KEY);
+
+        if (!favoriteProducts) {
+            return;
+        }
+
+        let countOfFavorite = 0;
+
+        favoriteProducts.forEach((product) => {
+            countOfFavorite += product.isFavorite;
         });
 
-        setLocalStorage("favorites", copyOfProducts);
-    }, []);
+        setFavorites(countOfFavorite);
+    };
 
-    const addFavorites = (id) => {
-        const copyOfFavoriteProducts = getLocalStorage("favorites");
+    const addFavorite = (callBack, product) => {
+        if (callBack) {
+            callBack();
+        }
 
-        copyOfFavoriteProducts.forEach((product) => {
-            if (product.id === id) {
-                if (product.isFavorite === 0) {
-                    product.isFavorite = 1;
-                    setHeartsCount(heartsCount + 1);
-                    return;
+        const favoriteProducts = getLocalStorage(FAVORITE_PRODUCT_KEY);
+
+        if (!favoriteProducts) {
+            setLocalStorage(FAVORITE_PRODUCT_KEY, [
+                {...product, isFavorite: 1},
+            ]);
+            updateFavoriteInfo();
+            return true;
+        }
+
+        let hasFavoriteProduct = false;
+
+        const updatedProducts = favoriteProducts.map((favoriteProduct) => {
+            if (favoriteProduct.id === product.id) {
+                hasFavoriteProduct = true;
+
+                if (favoriteProduct.isFavorite === 1) {
+                    return {
+                        ...favoriteProduct,
+                        isFavorite: favoriteProduct.isFavorite - 1,
+                    };
                 }
 
-                if (product.isFavorite === 1) {
-                    product.isFavorite = 0;
-                    setHeartsCount(heartsCount - 1);
+                if (favoriteProduct.isFavorite === 0) {
+                    return {
+                        ...favoriteProduct,
+                        isFavorite: favoriteProduct.isFavorite + 1,
+                    };
                 }
             }
+
+            return favoriteProduct;
         });
 
-        setLocalStorage("favorites", copyOfFavoriteProducts);
+        if (hasFavoriteProduct) {
+            setLocalStorage(FAVORITE_PRODUCT_KEY, updatedProducts);
+            updateFavoriteInfo();
+            return true;
+        }
+
+        favoriteProducts.push({...product, isFavorite: 1});
+
+        setLocalStorage(FAVORITE_PRODUCT_KEY, favoriteProducts);
+        updateFavoriteInfo();
     };
+
+    useEffect(() => {
+        updateFavoriteInfo();
+    }, []);
 
     return (
         <>
-            <Header onChange={changeCurrentPage} heartsCount={heartsCount} />
+            <Header
+                onChange={changeCurrentPage}
+                heartsCount={
+                    !getLocalStorage(FAVORITE_PRODUCT_KEY) ? 0 : favorites
+                }
+            />
             <main>
                 <Intro currentPage={currentPage} />
-                {currentPage === "Shop" && <Shop addFavorites={addFavorites} />}
+                {currentPage === "Shop" && <Shop addFavorite={addFavorite} />}
                 {currentPage === "Cart" && <Cart />}
             </main>
             <Footer />
