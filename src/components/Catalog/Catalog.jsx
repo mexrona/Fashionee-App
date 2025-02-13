@@ -1,6 +1,6 @@
 import Pagination from "../Pagination/Pagination";
 
-import CatalogHeart from "./CatalogHeart";
+import CatalogCart from "./CatalogCart";
 
 import {products} from "../../products.json";
 
@@ -23,46 +23,18 @@ export default function Catalog({addFavorite}) {
             </div>
             <div className="catalog__inner" id="products">
                 {products.map((product) => (
-                    <div className="catalog__item" key={product.id}>
-                        <a
-                            href="#"
-                            className="catalog__preview"
-                            onClick={(event) => event.preventDefault()}>
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="catalog__img"
-                            />
-                        </a>
-                        {product.isSale && (
-                            <div className="catalog__status catalog__status--sale">
-                                Sale
-                            </div>
-                        )}
-                        {product.isNew && (
-                            <div className="catalog__status catalog__status--new">
-                                New
-                            </div>
-                        )}
-                        <CatalogHeart
-                            product={product}
-                            addFavorite={addFavorite}
-                        />
-                        <a href="#" className="catalog__name">
-                            {product.name}
-                        </a>
-                        <div className="catalog__price">
-                            {product.oldPrice && (
-                                <div className="catalog__old">
-                                    ${product.oldPrice}
-                                </div>
-                            )}
-                            <div className="catalog__new">${product.price}</div>
-                        </div>
-                        <button className="catalog__buy" id={product.id}>
-                            Купить
-                        </button>
-                    </div>
+                    <CatalogCart
+                        key={product.id}
+                        image={product.image}
+                        name={product.name}
+                        isSale={product.isSale}
+                        isNew={product.isNew}
+                        oldPrice={product.oldPrice}
+                        price={product.price}
+                        id={product.id}
+                        addFavorite={addFavorite}
+                        product={product}
+                    />
                 ))}
             </div>
             <Pagination />

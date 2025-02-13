@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState, useEffect} from "react";
 
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 
@@ -20,6 +20,8 @@ export default function CatalogHeart({addFavorite, product}) {
             setLocalStorage(`favorite${product.id}`, "no-active");
             setIsActive(!isActive);
         }
+
+        setIsActive(!isActive);
     };
 
     useEffect(() => {
