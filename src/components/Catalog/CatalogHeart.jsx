@@ -3,40 +3,30 @@ import {useState, useEffect} from "react";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 
 export default function CatalogHeart({addFavorite, product}) {
-    const {setLocalStorage, getLocalStorage} = useLocalStorage();
+    const {getLocalStorage} = useLocalStorage();
 
-    const getKey = getLocalStorage(`favorite${product.id}`);
+    const FAVORITE_PRODUCT_KEY = "favorite-product";
 
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
-        if (!getKey || getKey === "no-active") {
-            setLocalStorage(`favorite${product.id}`, "active");
-            setIsActive(!isActive);
-            return;
-        }
-
-        if (getKey === "active") {
-            setLocalStorage(`favorite${product.id}`, "no-active");
-            setIsActive(!isActive);
-        }
-
         setIsActive(!isActive);
     };
 
     useEffect(() => {
-        if (!getKey) {
+        const copyOfFavoriteProducts = getLocalStorage(FAVORITE_PRODUCT_KEY);
+
+        if (!copyOfFavoriteProducts) {
             return;
         }
 
-        if (getKey === "active") {
-            setIsActive(true);
-            return;
-        }
-
-        if (getKey === "no-active") {
-            setIsActive(false);
-        }
+        copyOfFavoriteProducts.forEach((favorite) => {
+            if (favorite.id === product.id) {
+                favorite.isFavorite === 1
+                    ? setIsActive(true)
+                    : setIsActive(false);
+            }
+        });
     }, []);
 
     return (
