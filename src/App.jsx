@@ -7,91 +7,33 @@ import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
 
 import {useLocalStorage} from "./hooks/useLocalStorage";
+import {useUpdateInfo} from "./hooks/useUpdateInfo";
+import {useAddFavorite} from "./hooks/useAddFavorite";
+import {useBuyProduct} from "./hooks/useBuyProduct";
 
 export default function App() {
     const [currentPage, setCurrentPage] = useState("Shop");
 
-    const {setLocalStorage, getLocalStorage} = useLocalStorage();
+    const {getLocalStorage} = useLocalStorage();
+    const {updateFavoriteInfo, updateBasketInfo} = useUpdateInfo();
+    const {addFavorite} = useAddFavorite();
+    const {buyProduct} = useBuyProduct();
+
+    const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
+
+    const FAVORITE_PRODUCT_KEY = "favorite-product";
+    const PRODUCT_IN_BASKET_KEY = "product-in-basket";
+
+    const [favorites, setFavorites] = useState(0);
+    const [basket, setBasket] = useState(0);
 
     useEffect(() => {
         document.title = currentPage;
     }, [currentPage]);
 
-    const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
-
-    const FAVORITE_PRODUCT_KEY = "favorite-product";
-
-    const [favorites, setFavorites] = useState(0);
-
-    const updateFavoriteInfo = () => {
-        const favoriteProducts = getLocalStorage(FAVORITE_PRODUCT_KEY);
-
-        if (!favoriteProducts) {
-            return;
-        }
-
-        let countOfFavorite = 0;
-
-        favoriteProducts.forEach((product) => {
-            countOfFavorite += product.isFavorite;
-        });
-
-        setFavorites(countOfFavorite);
-    };
-
-    const addFavorite = (callBack, product) => {
-        if (callBack) {
-            callBack();
-        }
-
-        const favoriteProducts = getLocalStorage(FAVORITE_PRODUCT_KEY);
-
-        if (!favoriteProducts) {
-            setLocalStorage(FAVORITE_PRODUCT_KEY, [
-                {...product, isFavorite: 1},
-            ]);
-            updateFavoriteInfo();
-            return true;
-        }
-
-        let hasFavoriteProduct = false;
-
-        const updatedProducts = favoriteProducts.map((favoriteProduct) => {
-            if (favoriteProduct.id === product.id) {
-                hasFavoriteProduct = true;
-
-                if (favoriteProduct.isFavorite === 1) {
-                    return {
-                        ...favoriteProduct,
-                        isFavorite: favoriteProduct.isFavorite - 1,
-                    };
-                }
-
-                if (favoriteProduct.isFavorite === 0) {
-                    return {
-                        ...favoriteProduct,
-                        isFavorite: favoriteProduct.isFavorite + 1,
-                    };
-                }
-            }
-
-            return favoriteProduct;
-        });
-
-        if (hasFavoriteProduct) {
-            setLocalStorage(FAVORITE_PRODUCT_KEY, updatedProducts);
-            updateFavoriteInfo();
-            return true;
-        }
-
-        favoriteProducts.push({...product, isFavorite: 1});
-
-        setLocalStorage(FAVORITE_PRODUCT_KEY, favoriteProducts);
-        updateFavoriteInfo();
-    };
-
     useEffect(() => {
-        updateFavoriteInfo();
+        updateFavoriteInfo(setFavorites, getLocalStorage, FAVORITE_PRODUCT_KEY);
+        updateBasketInfo(setBasket, getLocalStorage, PRODUCT_IN_BASKET_KEY);
     }, []);
 
     return (
@@ -101,10 +43,20 @@ export default function App() {
                 heartsCount={
                     !getLocalStorage(FAVORITE_PRODUCT_KEY) ? 0 : favorites
                 }
+                basketCount={
+                    !getLocalStorage(PRODUCT_IN_BASKET_KEY) ? 0 : basket
+                }
             />
             <main>
                 <Intro currentPage={currentPage} />
-                {currentPage === "Shop" && <Shop addFavorite={addFavorite} />}
+                {currentPage === "Shop" && (
+                    <Shop
+                        addFavorite={addFavorite}
+                        setFavorites={setFavorites}
+                        buyProduct={buyProduct}
+                        setBasket={setBasket}
+                    />
+                )}
                 {currentPage === "Cart" && <Cart />}
             </main>
             <Footer />

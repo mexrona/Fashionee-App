@@ -6,7 +6,7 @@ import Nav from "../Nav/Nav";
 import {useState, useEffect} from "react";
 import {headerItems} from "../../data";
 
-export default function Header({onChange, heartsCount}) {
+export default function Header({onChange, heartsCount, basketCount}) {
     const [scrollPos, setScrollPos] = useState(0);
 
     const changeScrollPos = () => setScrollPos(window.scrollY);
@@ -45,7 +45,7 @@ export default function Header({onChange, heartsCount}) {
                                         {item.id === "heart" ? (
                                             <>{heartsCount}</>
                                         ) : (
-                                            0
+                                            <>{basketCount}</>
                                         )}
                                     </div>
                                 ) : null}

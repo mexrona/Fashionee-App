@@ -1,10 +1,14 @@
 import Pagination from "../Pagination/Pagination";
-
 import CatalogCart from "./CatalogCart";
 
 import {products} from "../../products.json";
 
-export default function Catalog({addFavorite}) {
+export default function Catalog({
+    addFavorite,
+    setFavorites,
+    buyProduct,
+    setBasket,
+}) {
     return (
         <div className="catalog">
             <div className="catalog__header">
@@ -33,6 +37,9 @@ export default function Catalog({addFavorite}) {
                         price={product.price}
                         id={product.id}
                         addFavorite={addFavorite}
+                        setFavorites={setFavorites}
+                        buyProduct={buyProduct}
+                        setBasket={setBasket}
                         product={product}
                     />
                 ))}

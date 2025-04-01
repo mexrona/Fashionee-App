@@ -1,9 +1,11 @@
 import {useState, useEffect} from "react";
 
 import {useLocalStorage} from "../../hooks/useLocalStorage";
+import {useUpdateInfo} from "../../hooks/useUpdateInfo";
 
-export default function CatalogHeart({addFavorite, product}) {
-    const {getLocalStorage} = useLocalStorage();
+export default function CatalogHeart({addFavorite, setFavorites, product}) {
+    const {getLocalStorage, setLocalStorage} = useLocalStorage();
+    const {updateFavoriteInfo} = useUpdateInfo();
 
     const FAVORITE_PRODUCT_KEY = "favorite-product";
 
@@ -32,7 +34,17 @@ export default function CatalogHeart({addFavorite, product}) {
     return (
         <div
             className={isActive ? "catalog__heart favorite" : "catalog__heart"}
-            onClick={() => addFavorite(handleClick, product)}>
+            onClick={() =>
+                addFavorite(
+                    handleClick,
+                    getLocalStorage,
+                    setLocalStorage,
+                    updateFavoriteInfo,
+                    setFavorites,
+                    product,
+                    FAVORITE_PRODUCT_KEY
+                )
+            }>
             <img src="../public/images/icons/heart.png" alt="Wishlist" />
         </div>
     );

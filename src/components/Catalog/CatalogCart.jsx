@@ -1,5 +1,8 @@
 import CatalogHeart from "./CatalogHeart";
 
+import {useLocalStorage} from "../../hooks/useLocalStorage";
+import {useUpdateInfo} from "../../hooks/useUpdateInfo";
+
 export default function CatalogCart({
     image,
     name,
@@ -9,8 +12,16 @@ export default function CatalogCart({
     price,
     id,
     addFavorite,
+    setFavorites,
+    buyProduct,
+    setBasket,
     product,
 }) {
+    const {getLocalStorage, setLocalStorage} = useLocalStorage();
+    const {updateBasketInfo} = useUpdateInfo();
+
+    const PRODUCT_IN_BASKET_KEY = "product-in-basket";
+
     return (
         <div className="catalog__item">
             <a
@@ -27,7 +38,11 @@ export default function CatalogCart({
             {isNew && (
                 <div className="catalog__status catalog__status--new">New</div>
             )}
-            <CatalogHeart addFavorite={addFavorite} product={product} />
+            <CatalogHeart
+                addFavorite={addFavorite}
+                setFavorites={setFavorites}
+                product={product}
+            />
             <a href="#" className="catalog__name">
                 {name}
             </a>
@@ -35,7 +50,19 @@ export default function CatalogCart({
                 {oldPrice && <div className="catalog__old">${oldPrice}</div>}
                 <div className="catalog__new">${price}</div>
             </div>
-            <button className="catalog__buy" id={id}>
+            <button
+                className="catalog__buy"
+                id={id}
+                onClick={() =>
+                    buyProduct(
+                        getLocalStorage,
+                        setLocalStorage,
+                        updateBasketInfo,
+                        setBasket,
+                        product,
+                        PRODUCT_IN_BASKET_KEY
+                    )
+                }>
                 Купить
             </button>
         </div>

@@ -6,7 +6,12 @@ import Reviewed from "../Reviewed/Reviewed";
 import Banner from "../Banner/Banner";
 import Catalog from "../Catalog/Catalog";
 
-export default function Products({addFavorite}) {
+export default function Products({
+    addFavorite,
+    setFavorites,
+    buyProduct,
+    setBasket,
+}) {
     return (
         <section className="container container--products">
             <div className="products">
@@ -25,7 +30,12 @@ export default function Products({addFavorite}) {
                     <Reviewed />
                     <Banner />
                 </aside>
-                <Catalog addFavorite={addFavorite} />
+                <Catalog
+                    addFavorite={addFavorite}
+                    setFavorites={setFavorites}
+                    buyProduct={buyProduct}
+                    setBasket={setBasket}
+                />
             </div>
         </section>
     );
