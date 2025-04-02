@@ -1,23 +1,31 @@
-export default function Pagination() {
+import PaginationItem from "./PaginationItem";
+
+export default function Pagination({
+    activePage,
+    handleClick,
+    prevCondition,
+    nextCondition,
+    callBackFilter,
+}) {
     return (
         <div className="pager" id="pager">
             <div
                 className="pager__arrow pager__arrow--prev"
-                id="pagerArrowPrev"></div>
+                id="pagerArrowPrev"
+                onClick={() =>
+                    handleClick(prevCondition, callBackFilter)
+                }></div>
             <div className="pager__inner" id="pages">
-                <div className="pager__item">
-                    <div className="pager__number active">1</div>
-                </div>
-                <div className="pager__item">
-                    <div className="pager__number">2</div>
-                </div>
-                <div className="pager__item">
-                    <div className="pager__number">3</div>
-                </div>
+                <PaginationItem id="1" activePage={activePage} />
+                <PaginationItem id="2" activePage={activePage} />
+                <PaginationItem id="3" activePage={activePage} />
             </div>
             <div
                 className="pager__arrow pager__arrow--next"
-                id="pagerArrowNext"></div>
+                id="pagerArrowNext"
+                onClick={() =>
+                    handleClick(nextCondition, callBackFilter)
+                }></div>
         </div>
     );
 }

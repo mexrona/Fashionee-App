@@ -24,7 +24,7 @@ export default function Products({
                         <div className="arrow arrow--sidebar"></div>
                         Deploy
                     </div>
-                    <button className="button" id="applyFilter">
+                    <button className="button" id="applyFilter" disabled>
                         Apply Filter
                     </button>
                     <Reviewed />
