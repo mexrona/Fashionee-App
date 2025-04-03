@@ -3,12 +3,18 @@
     height: 2px;
     background-color: $gray;
     position: relative;
+    transition: background-color 0.1s linear;
+
+    &--catalog {
+        position: absolute;
+    }
 
     &::before {
         @include element(6px, 6px, transparent);
         border: 4px solid transparent;
         left: 50%;
         transform: translate(-50%, 0);
+        transition: border-color 0.1s linear;
     }
 
     &--sidebar::before {

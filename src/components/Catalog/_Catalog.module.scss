@@ -29,11 +29,11 @@
 .catalog__filter {
     width: 100%;
     max-width: 214px;
-    padding-bottom: 18px;
+    margin-bottom: 18px;
     @include font("Raleway", 400, 14px, 1.7, $black);
-    border-bottom: 1px solid rgba($gray, 0.2);
-    cursor: pointer;
+    // border-bottom: 1px solid rgba($gray, 0.2);
     transition: color 0.1s linear;
+    position: relative;
 
     &:hover {
         color: $red;
@@ -46,10 +46,26 @@
     &:hover .catalog__select option {
         color: $black;
     }
+
+    &:hover .arrow--catalog {
+        background-color: $red;
+    }
+
+    &:hover .arrow--catalog::before {
+        border-top-color: $red;
+    }
+
+    &::after {
+        @include element(100%, 1px, rgba($gray, 0.2));
+        bottom: -18px;
+    }
 }
 
 .catalog__select {
+    width: 100%;
     @include font("Raleway", 400, 14px, 1.7, $black);
+    text-align: right;
+    cursor: pointer;
     transition: color 0.1s linear;
 }
 
