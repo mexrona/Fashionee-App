@@ -2,7 +2,7 @@ import {useState} from "react";
 import {categories} from "../../data";
 
 export default function Categories() {
-    const [activeCategory, setActiveCategory] = useState("Men");
+    const [activeCategory, setActiveCategory] = useState("All");
 
     const handleClick = (type) => {
         setActiveCategory(type);

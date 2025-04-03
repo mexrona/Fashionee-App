@@ -25,7 +25,10 @@ export default function Color({data, value}) {
                 type="checkbox"
                 value={value}
             />
-            <label className="colors__label" htmlFor={value}>
+            <label
+                className="colors__label"
+                htmlFor={value}
+                onClick={() => handleClick()}>
                 {data}
             </label>
         </div>

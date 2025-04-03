@@ -13,19 +13,18 @@ import {useBuyProduct} from "./hooks/useBuyProduct";
 
 export default function App() {
     const [currentPage, setCurrentPage] = useState("Shop");
+    const [favorites, setFavorites] = useState(0);
+    const [basket, setBasket] = useState(0);
 
     const {getLocalStorage} = useLocalStorage();
     const {updateFavoriteInfo, updateBasketInfo} = useUpdateInfo();
     const {addFavorite} = useAddFavorite();
     const {buyProduct} = useBuyProduct();
 
-    const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
-
     const FAVORITE_PRODUCT_KEY = "favorite-product";
     const PRODUCT_IN_BASKET_KEY = "product-in-basket";
 
-    const [favorites, setFavorites] = useState(0);
-    const [basket, setBasket] = useState(0);
+    const changeCurrentPage = (currentPage) => setCurrentPage(currentPage);
 
     useEffect(() => {
         document.title = currentPage;

@@ -1,4 +1,4 @@
-import {useCallback} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 
 import {products} from "../../products.json";
 

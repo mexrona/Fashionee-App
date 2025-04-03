@@ -1,11 +1,7 @@
 import Pagination from "../Pagination/Pagination";
 import CatalogCart from "./CatalogCart";
 
-import {useState, useEffect} from "react";
-
-import {useLocalStorage} from "../../hooks/useLocalStorage";
-import {usePagination} from "../../hooks/usePagination";
-import {useFilter} from "../../hooks/useFilter";
+import {useState} from "react";
 
 import {products} from "../../products.json";
 
@@ -15,104 +11,16 @@ export default function Catalog({
     buyProduct,
     setBasket,
 }) {
-    const {getLocalStorage, setLocalStorage} = useLocalStorage();
-    const {paginateCount, createPagination, paginateProducts} = usePagination();
-    const {filterProductsByFilterInfo, filterProducts} = useFilter();
+    const [activePage, setActivePage] = useState(0);
 
-    const [activePage, setActivePage] = useState("1");
-    const [pageCount, setPageCount] = useState();
-    const [productsObject, setProductsObject] = useState(products);
+    const perPage = 12;
+    const countOfPages = Math.ceil(products.length / perPage);
+    let firstProduct = activePage * perPage + 1;
+    let lastProduct = activePage * perPage + 12;
 
-    const PAGINATE_COUNT_KEY = "paginate-count";
-    const paginationInfo = {
-        activePage: Number(activePage) - 1,
-        perPage: 12,
-    };
-
-    let oldFilter = {
-        category: "All",
-        price: {
-            min: 0,
-            max: 999999,
-        },
-        colors: ["Blue"],
-    };
-
-    const currentFilter = {
-        category: "All",
-        price: {
-            min: 0,
-            max: 999999,
-        },
-        colors: [],
-    };
-
-    let searchValue = "";
-    let sort = "";
-
-    useEffect(() => {
-        setPageCount(products.length / paginationInfo.perPage);
-    }, []);
-
-    const prevCondition = (callBack) => {
-        console.log("prev", paginationInfo);
-
-        if (paginationInfo.activePage !== 0) {
-            console.log("YES prev");
-
-            setActivePage(`${Number(activePage) - 1}`);
-            // paginationInfo.activePage = paginationInfo.activePage - 1;
-            console.log("prev", paginationInfo);
-
-            callBack();
-        }
-    };
-
-    const nextCondition = (callBack) => {
-        console.log("next", paginationInfo);
-
-        if (paginationInfo.activePage !== pageCount) {
-            console.log("YES next");
-
-            setActivePage(`${Number(activePage) + 1}`);
-            // paginationInfo.activePage = paginationInfo.activePage + 1;
-            console.log("next", paginationInfo);
-
-            callBack();
-        }
-    };
-
-    const createProductList = (filteredProducts, productsCount) => {
-        console.log(filteredProducts, productsCount);
-
-        setProductsObject(filteredProducts);
-        createPagination(productsCount, paginationInfo);
-    };
-
-    const callBackFilter = () => {
-        const {filteredProducts, productsCount} = filterProducts(
-            searchValue,
-            oldFilter,
-            sort,
-            paginationInfo,
-            products,
-            filterProductsByFilterInfo,
-            paginateProducts
-        );
-
-        createProductList(filteredProducts, productsCount);
-    };
-
-    const handleClick = (condition, callBack) => {
-        console.log("click");
-        console.log("до", paginationInfo.activePage);
-
-        paginateCount(getLocalStorage, setLocalStorage, PAGINATE_COUNT_KEY);
-
-        condition(callBack);
-
-        console.log("после", paginationInfo.activePage);
-    };
+    const pageProducts = products.filter((product) => {
+        return product.id >= firstProduct && product.id <= lastProduct;
+    });
 
     return (
         <div className="catalog">
@@ -131,7 +39,7 @@ export default function Catalog({
                 </div>
             </div>
             <div className="catalog__inner" id="products">
-                {productsObject.map((product) => (
+                {pageProducts.map((product) => (
                     <CatalogCart
                         key={product.id}
                         image={product.image}
@@ -150,11 +58,9 @@ export default function Catalog({
                 ))}
             </div>
             <Pagination
+                setActivePage={setActivePage}
+                countOfPages={countOfPages}
                 activePage={activePage}
-                handleClick={handleClick}
-                prevCondition={prevCondition}
-                nextCondition={nextCondition}
-                callBackFilter={callBackFilter}
             />
         </div>
     );

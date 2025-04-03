@@ -1,31 +1,48 @@
 import PaginationItem from "./PaginationItem";
 
-export default function Pagination({
-    activePage,
-    handleClick,
-    prevCondition,
-    nextCondition,
-    callBackFilter,
-}) {
+export default function Pagination({setActivePage, countOfPages, activePage}) {
+    const paginationItems = [];
+
+    for (let i = 0; i < countOfPages; i++) {
+        paginationItems.push({id: i});
+    }
+
+    const handlePrevClick = (prev) =>
+        activePage !== 0 ? setActivePage(prev - 1) : setActivePage(activePage);
+
+    const handleNextClick = (prev) =>
+        activePage !== countOfPages - 1
+            ? setActivePage(prev + 1)
+            : setActivePage(activePage);
+
     return (
         <div className="pager" id="pager">
             <div
-                className="pager__arrow pager__arrow--prev"
+                className={
+                    activePage !== 0
+                        ? "pager__arrow pager__arrow--prev"
+                        : "pager__arrow pager__arrow--prev no-active"
+                }
                 id="pagerArrowPrev"
-                onClick={() =>
-                    handleClick(prevCondition, callBackFilter)
-                }></div>
+                onClick={() => handlePrevClick(activePage)}></div>
             <div className="pager__inner" id="pages">
-                <PaginationItem id="1" activePage={activePage} />
-                <PaginationItem id="2" activePage={activePage} />
-                <PaginationItem id="3" activePage={activePage} />
+                {paginationItems.map((item) => (
+                    <PaginationItem
+                        key={item.id}
+                        id={item.id}
+                        activePage={activePage}
+                        setActivePage={setActivePage}
+                    />
+                ))}
             </div>
             <div
-                className="pager__arrow pager__arrow--next"
+                className={
+                    activePage !== countOfPages - 1
+                        ? "pager__arrow pager__arrow--next"
+                        : "pager__arrow pager__arrow--next no-active"
+                }
                 id="pagerArrowNext"
-                onClick={() =>
-                    handleClick(nextCondition, callBackFilter)
-                }></div>
+                onClick={() => handleNextClick(activePage)}></div>
         </div>
     );
 }
