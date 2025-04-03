@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 import Categories from "../Categories/Categories";
 import Search from "../Search/Search";
 import Price from "../Price/Price";
@@ -6,17 +8,30 @@ import Reviewed from "../Reviewed/Reviewed";
 import Banner from "../Banner/Banner";
 import Catalog from "../Catalog/Catalog";
 
+import {products} from "../../products.json";
+
 export default function Products({
     addFavorite,
     setFavorites,
     buyProduct,
     setBasket,
 }) {
+    const [searchValue, setSearchValue] = useState("");
+
+    const filterBySearchValue = (products, value) => {
+        products.filter((product) => {
+            return product.name.toLowerCase().includes(value.toLowerCase());
+        });
+    };
+
     return (
         <section className="container container--products">
             <div className="products">
                 <aside className="sidebar">
-                    <Search />
+                    <Search
+                        searchValue={searchValue}
+                        setSearchValue={setSearchValue}
+                    />
                     <Categories />
                     <Price />
                     <Colors />

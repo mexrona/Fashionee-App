@@ -23,6 +23,7 @@ export default function Catalog({
     let firstProduct = activePage * perPage + 1;
     let lastProduct = activePage * perPage + 12;
 
+    // Нужно создать состояние для pageProducts
     const pageProducts = products.filter((product) => {
         return product.id >= firstProduct && product.id <= lastProduct;
     });

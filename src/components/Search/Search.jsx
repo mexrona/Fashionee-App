@@ -1,9 +1,15 @@
-import {useState} from "react";
+import {useDebounce} from "../../hooks/useDebounce";
 
-export default function Search() {
-    const [value, setValue] = useState("");
+export default function Search({searchValue, setSearchValue}) {
+    const {debounce} = useDebounce();
 
-    const onChange = (value) => setValue(value);
+    const onChange = (event) => setSearchValue(event.target.value);
+
+    const onKeyUp = (value) => {
+        debounce(() => {
+            console.log(value);
+        }, 500);
+    };
 
     return (
         <div className="input">
@@ -14,8 +20,9 @@ export default function Search() {
                     name="search"
                     type="text"
                     placeholder="Search"
-                    value={value}
-                    onChange={() => onChange()}
+                    value={searchValue}
+                    onChange={() => onChange(event)}
+                    onKeyUp={() => onKeyUp(searchValue)}
                 />
                 <img
                     className="input__icon input__icon--search"
