@@ -1,16 +1,4 @@
-import {useDebounce} from "../../hooks/useDebounce";
-
-export default function Search({searchValue, setSearchValue}) {
-    const {debounce} = useDebounce();
-
-    const onChange = (event) => setSearchValue(event.target.value);
-
-    const onKeyUp = (value) => {
-        debounce(() => {
-            console.log(value);
-        }, 500);
-    };
-
+export default function Search({onChange}) {
     return (
         <div className="input">
             <label>
@@ -20,9 +8,7 @@ export default function Search({searchValue, setSearchValue}) {
                     name="search"
                     type="text"
                     placeholder="Search"
-                    value={searchValue}
                     onChange={() => onChange(event)}
-                    onKeyUp={() => onKeyUp(searchValue)}
                 />
                 <img
                     className="input__icon input__icon--search"

@@ -12,6 +12,7 @@ export default function Catalog({
     setFavorites,
     buyProduct,
     setBasket,
+    searchProducts,
 }) {
     const [activePage, setActivePage] = useState(0);
     const [sortValue, setSortValue] = useState("");
@@ -19,12 +20,11 @@ export default function Catalog({
     const {sortProduct} = useSortProduct();
 
     const perPage = 12;
-    const countOfPages = Math.ceil(products.length / perPage);
+    const countOfPages = Math.ceil(searchProducts.length / perPage);
     let firstProduct = activePage * perPage + 1;
     let lastProduct = activePage * perPage + 12;
 
-    // Нужно создать состояние для pageProducts
-    const pageProducts = products.filter((product) => {
+    const pageProducts = searchProducts.filter((product) => {
         return product.id >= firstProduct && product.id <= lastProduct;
     });
 
@@ -38,8 +38,8 @@ export default function Catalog({
         <div className="catalog">
             <div className="catalog__header">
                 <div className="catalog__text">
-                    There are <span>{products.length}</span> products in this
-                    category
+                    There are <span>{searchProducts.length}</span> products in
+                    this category
                 </div>
                 <div className="catalog__filter">
                     <div className="arrow arrow--catalog"></div>

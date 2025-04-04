@@ -18,20 +18,19 @@ export default function Products({
 }) {
     const [searchValue, setSearchValue] = useState("");
 
-    const filterBySearchValue = (products, value) => {
-        products.filter((product) => {
-            return product.name.toLowerCase().includes(value.toLowerCase());
-        });
+    const searchProducts = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchValue.toLowerCase());
+    });
+
+    const onChange = (event) => {
+        setSearchValue(event.target.value);
     };
 
     return (
         <section className="container container--products">
             <div className="products">
                 <aside className="sidebar">
-                    <Search
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                    />
+                    <Search onChange={onChange} />
                     <Categories />
                     <Price />
                     <Colors />
@@ -50,6 +49,7 @@ export default function Products({
                     setFavorites={setFavorites}
                     buyProduct={buyProduct}
                     setBasket={setBasket}
+                    searchProducts={searchProducts}
                 />
             </div>
         </section>
