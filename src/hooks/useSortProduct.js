@@ -1,6 +1,6 @@
 export const useSortProduct = () => {
     const sortProduct = (products, sort) => {
-        products.sort((a, b) => {
+        const sortedProducts = products.toSorted((a, b) => {
             if (sort === "ASC") {
                 if (a.name > b.name) return 1;
                 if (a.name === b.name) return 0;
@@ -13,6 +13,8 @@ export const useSortProduct = () => {
                 if (a.name < b.name) return 1;
             }
         });
+
+        return sortedProducts;
     };
 
     return {sortProduct};

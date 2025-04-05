@@ -16,7 +16,7 @@ export default function Pagination({setActivePage, countOfPages, activePage}) {
             : setActivePage(activePage);
 
     return (
-        <div className="pager" id="pager">
+        <div className={countOfPages ? "pager" : "pager hide"} id="pager">
             <div
                 className={
                     activePage !== 0

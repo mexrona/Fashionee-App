@@ -1,9 +1,6 @@
-import {useState} from "react";
 import {categories} from "../../data";
 
-export default function Categories() {
-    const [activeCategory, setActiveCategory] = useState("All");
-
+export default function Categories({activeCategory, setActiveCategory}) {
     const handleClick = (type) => {
         setActiveCategory(type);
     };

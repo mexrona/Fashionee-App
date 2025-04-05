@@ -1,10 +1,18 @@
 import {useState} from "react";
 
-export default function Color({data, value}) {
+export default function Color({colors, setColors, data, value}) {
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
         setIsActive(!isActive);
+
+        if (!isActive) {
+            setColors([...colors, data]);
+        }
+
+        if (isActive) {
+            setColors((prev) => prev.filter((color) => color !== data));
+        }
     };
 
     return (

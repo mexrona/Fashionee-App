@@ -5,34 +5,34 @@ import CatalogCart from "./CatalogCart";
 
 import {useSortProduct} from "../../hooks/useSortProduct";
 
-import {products} from "../../products.json";
-
 export default function Catalog({
     addFavorite,
     setFavorites,
     buyProduct,
     setBasket,
     searchProducts,
+    activePage,
+    setActivePage,
 }) {
-    const [activePage, setActivePage] = useState(0);
     const [sortValue, setSortValue] = useState("");
 
     const {sortProduct} = useSortProduct();
 
     const perPage = 12;
     const countOfPages = Math.ceil(searchProducts.length / perPage);
-    let firstProduct = activePage * perPage + 1;
-    let lastProduct = activePage * perPage + 12;
-
-    const pageProducts = searchProducts.filter((product) => {
-        return product.id >= firstProduct && product.id <= lastProduct;
-    });
 
     const onChange = (event) => {
         setSortValue(event.target.value);
     };
 
-    sortProduct(pageProducts, sortValue);
+    const sortedProducts = sortProduct(searchProducts, sortValue);
+
+    const firstProductIndex = activePage * perPage;
+
+    const pageProducts = sortedProducts.slice(
+        firstProductIndex,
+        (activePage + 1) * perPage
+    );
 
     return (
         <div className="catalog">

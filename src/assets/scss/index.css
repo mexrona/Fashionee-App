@@ -980,7 +980,6 @@ select {
 .catalog__inner {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   -moz-column-gap: 30px;
        column-gap: 30px;
   row-gap: 50px;

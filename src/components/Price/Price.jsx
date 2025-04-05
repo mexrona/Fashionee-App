@@ -1,9 +1,4 @@
-import {useState} from "react";
-
-export default function Price() {
-    const [minPrice, setMinPrice] = useState("21.00");
-    const [maxPrice, setMaxPrice] = useState("187.99");
-
+export default function Price({minPrice, setMinPrice, maxPrice, setMaxPrice}) {
     const changeMinPrice = (minPrice) => setMinPrice(minPrice);
     const changeMaxPrice = (maxPrice) => setMaxPrice(maxPrice);
 

@@ -1,4 +1,4 @@
-export default function Search({onChange}) {
+export default function Search({onChange, onKeyUp}) {
     return (
         <div className="input">
             <label>
@@ -9,6 +9,7 @@ export default function Search({onChange}) {
                     type="text"
                     placeholder="Search"
                     onChange={() => onChange(event)}
+                    onKeyUp={() => onKeyUp()}
                 />
                 <img
                     className="input__icon input__icon--search"
