@@ -56,7 +56,9 @@ export default function App() {
                         setBasket={setBasket}
                     />
                 )}
-                {currentPage === "Cart" && <Cart />}
+                {currentPage === "Cart" && (
+                    <Cart setBasket={setBasket} buyProduct={buyProduct} />
+                )}
             </main>
             <Footer />
         </>

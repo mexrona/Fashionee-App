@@ -1,4 +1,29 @@
-export default function Order() {
+import {useEffect} from "react";
+
+import {useLocalStorage} from "../../hooks/useLocalStorage";
+
+export default function Order({
+    orderPrice,
+    orderStatus,
+    setOrderStatus,
+    totalPrice,
+}) {
+    const {getLocalStorage} = useLocalStorage();
+
+    const handleClick = () => {
+        console.log(
+            `Order price ${orderPrice}\nDiscount for promo code ${
+                orderStatus ? "10%" : "0%"
+            }\nDelivery $15\nTotal $${totalPrice}`
+        );
+    };
+
+    useEffect(() => {
+        if (getLocalStorage("promo-code")) {
+            setOrderStatus(true);
+        }
+    }, []);
+
     return (
         <div className="order">
             <h3 className="order__title">Your Order</h3>
@@ -6,13 +31,13 @@ export default function Order() {
                 <div className="order__item">
                     Оrder price
                     <span className="order__price" id="orderPrice">
-                        &#36;0
+                        ${orderPrice}
                     </span>
                 </div>
                 <div className="order__item">
                     Discount for promo code
                     <span className="order__status" id="orderStatus">
-                        0%
+                        {orderStatus ? "10%" : "0%"}
                     </span>
                 </div>
                 <div className="order__item">
@@ -28,10 +53,13 @@ export default function Order() {
             <div className="order__total">
                 Total
                 <span className="order__price order__price--total" id="total">
-                    &#36;0
+                    ${totalPrice}
                 </span>
             </div>
-            <div className="button button--order" id="checkout">
+            <div
+                className="button button--order"
+                id="checkout"
+                onClick={() => handleClick()}>
                 Checkout
             </div>
         </div>

@@ -9,6 +9,10 @@ export const useBuyProduct = () => {
     ) => {
         const productsInBasket = callBackOne(key);
 
+        if (callBackOne(`hide${product.id}`)) {
+            localStorage.removeItem(`hide${product.id}`);
+        }
+
         if (!productsInBasket) {
             callBackTwo(key, [{...product, quantity: 1}]);
             callBackThree(callBackFour, callBackOne, key);
